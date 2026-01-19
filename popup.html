@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 400px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #8a4c64 0%, #6c1717 100%);
+      color: white;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      margin: 0 0 5px 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    
+    .subtitle {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    
+    .trust-score {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .score-number {
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      margin: 10px 0;
+    }
+    
+    .score-label {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .source-info {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    
+    .source-name {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .metrics {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+    }
+    
+    .metric {
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .metric-label {
+      font-size: 11px;
+      color: #888;
+      margin-top: 3px;
+    }
+    
+    .chart-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    
+    #radarChart {
+      max-width: 100%;
+      height: 250px;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 14px;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    
+    .trusted {
+      background: #10b981;
+      color: white;
+    }
+    
+    .moderate {
+      background: #f59e0b;
+      color: white;
+    }
+    
+    .untrusted {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .unknown {
+      background: #6b7280;
+      color: white;
+    }
+    
+    .review-section {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .review-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #667eea;
+    }
+    
+    .rating-item {
+      margin-bottom: 15px;
+    }
+    
+    .rating-label {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    
+    .rating-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .rating-slider {
+      flex: 1;
+      height: 6px;
+      border-radius: 5px;
+      outline: none;
+      -webkit-appearance: none;
+      background: #e5e7eb;
+    }
+    
+    .rating-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+    }
+    
+    .rating-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .rating-value {
+      font-weight: 600;
+      font-size: 14px;
+      color: #667eea;
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.2s;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+    
+    .success-message {
+      text-align: center;
+      color: #10b981;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: 500;
+      display: none;
+    }
+    
+    .toggle-review-btn {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+    }
+    
+    .toggle-review-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📰 News Trust Score</h1>
+    <div class="subtitle">Crowdsourced Article Credibility</div>
+  </div>
+  
+  <div id="content" class="loading">
+    Analyzing current page...
+  </div>
+  
+  <div class="footer">
+    Based on user feedback and engagement metrics
+  </div>
+
+  <script src="chart.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
