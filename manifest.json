@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "News Trust Score",
+  "name": "TrustLens",
   "version": "1.0",
   "description": "Shows trust scores and credibility metrics for news articles",
   "permissions": ["activeTab", "storage"],
